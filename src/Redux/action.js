@@ -12,7 +12,6 @@ export const login = (credentials) => (dispatch) => {
     .get("https://react-mock-2-json-server.onrender.com/users")
     .then((res) => {
       let data = res.data;
-      let exist = false;
       let user = data.filter((el) => {
         if (
           el.email === credentials.email &&
@@ -21,8 +20,9 @@ export const login = (credentials) => (dispatch) => {
           return true;
         }
       });
-      if (exist) {
+      if (user.length > 0) {
         dispatch({ type: LOGIN_SUCCESS, payload: user[0] });
+        console.log("login success done");
       }
     })
     .catch((err) => dispatch({ type: LOGIN_FAILURE }));
